@@ -1,0 +1,264 @@
+/* ------------------------------------------------------------
+
+   Copyright 2016 Esri
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at:
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+--------------------------------------------------------------- */
+
+html, body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Avenir Next W00, Helvetica, Segoe UI, Arial, sans-serif;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+#top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: #0079c1;
+    color: #ffffff;
+    z-index: 10;
+}
+
+#bottom {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+}
+
+#left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 310px;
+    background-color: white;
+    color: black;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#right {
+    position: absolute;
+    top: 0;
+    left: 310px;
+    right: 0;
+    bottom: 0;
+}
+
+#heading {
+    position: absolute;
+    margin-top: 6px;
+    left: 8px;
+    font-size: 30px;
+}
+
+#buttons {
+    position: absolute;
+    top: 8px;
+    right: 7px;
+}
+
+#buttons > button {
+    width: 80px;
+    background-color: #0079c1;
+    color: white;
+}
+
+#clear {
+    margin-left: 10px;
+}
+
+#help {
+    margin-left: 10px;
+}
+
+#profile {
+    display: none;
+}
+
+#profile > button {
+    background-color: #0079c1;
+    color: white;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+#profile > button > div > * {
+    display: inline-block;
+}
+
+#profile-name {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 6px;
+}
+
+#esri-logo {
+    position: absolute;
+    margin-top: 5px;
+    height: 40px;
+    text-align: left;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#elevation-resolution .btn,
+#texture-resolution .btn {
+    width:60px;
+}
+
+#tile-size {
+    font-style: italic;
+}
+
+.btn, .form-control, .dropdown-menu {
+    border-radius: 0 0 0 0;
+}
+
+.btn-default:focus {
+    background-color: #fff;
+}
+
+/*.carousel-indicators li {
+    border-color: #777;
+}
+
+.carousel-indicators .active {
+    background-color: #777;
+}
+
+.carousel-caption {
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: 'Avenir LT W01 85 Heavy';
+    text-shadow: none;
+    color: #777;
+}
+
+.carousel-control > i {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin-top: -10px;
+    margin-right: -10px;
+}*/
+
+.popover-content{
+    color: #000000;
+}
+
+.popover-title {
+    color: #000000;
+}
+
+.modal-content {
+    border-radius: 0 0 0 0;
+}
+
+.rc-heading {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.rc-separator {
+    width: 270px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(0, 121, 193, 1), rgba(0, 121, 193, 0));
+    margin-top: 0;
+    margin-left: 15px;
+}
+
+.rc-subheading {
+    display: inline-block;
+    font-size: 14px;
+    width: 85px;
+    vertical-align: top;
+    margin-top: 5px;
+}
+
+.rc-row {
+    display: block;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.rc-inline {
+    display: inline-block;
+}
+
+.rc-block {
+    display: block;
+}
+
+.rc-spinner {
+    width: 60px;
+}
+
+.rc-spinner input {
+    text-align: right;
+}
+
+.rc-toggles {
+    position: relative;
+    white-space: nowrap;
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.rc-toggles > .btn {
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    margin-left: -1px;
+    position: relative;
+    border-radius: 0 0 0 0;
+}
+
+.rc-toggles > .btn:last-child {
+    margin-top: -2px;
+}
+
+.rc-toggles i {
+    position: absolute;
+    top: 0;
+    left: 4px;
+}
+
+.rc-bottom-padding {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,2 @@
+This folder is the destination of downloaded images and processed zip files. One sub-folder will be created per request. A zip file will be created for each sub-folder with the same name. The zip file will be returned to the user.
+The IIS user must have write access to THIS folder.

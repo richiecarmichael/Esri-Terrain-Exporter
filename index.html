@@ -1,0 +1,369 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <!--
+
+      Copyright 2016 Esri
+
+      Licensed under the Apache License, Version 2.0 (the 'License');
+      you may not use this file except in compliance with the License.
+      You may obtain a copy of the License at:
+      http://www.apache.org/licenses/LICENSE-2.0
+
+      Unless required by applicable law or agreed to in writing, software
+      distributed under the License is distributed on an 'AS IS' BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      See the License for the specific language governing permissions and
+      limitations under the License.
+
+    -->
+    <title></title>
+    <meta http-equiv='content-type' content='text/html;charset=utf-8' />
+    <meta name='author' content='Esri' />
+    <meta name='keywords' content='' />
+    <meta name='description' content='' />
+    <meta name='robots' content='index,follow' />
+
+    <meta name='twitter:card' value='summary' />
+    <meta name='twitter:title' content='' />
+    <meta name='twitter:site' content='@esri' />
+    <meta name='twitter:creator' content='@esri' />
+    <meta name='twitter:description' content='' />
+
+    <meta property='og:locale' content='en_us' />
+    <meta property='og:title' content='' />
+    <meta property='og:description' content='' />
+    <meta property='og:type' content='website' />
+    <meta property='og:url' content='//maps.esri.com/rc/terrainexport/index.html' />
+    <meta property='og:image' content='//maps.esri.com/rc/terrainexport/img/uoh.jpg' />
+
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta name='apple-touch-fullscreen' content='yes' />
+    <link rel='apple-touch-icon' href='/img/apple-touch-icon.png' />
+    <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <link type='image/ico' href='img/favicon.ico' rel='shortcut icon' />
+    <link type='image/ico' href='img/favicon.ico' rel='icon' />
+
+    <link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+    <link type='text/css' rel='stylesheet' href='css/font-awesome.min.css' />
+    <link type='text/css' rel='stylesheet' href='//js.arcgis.com/4.1/esri/css/main.css' />
+    <link type='text/css' rel='stylesheet' href='index.css' />
+
+    <script type='text/javascript' src='js/jquery-3.1.1.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='//js.arcgis.com/4.1/'></script>
+    <script type='text/javascript' src='index.js'></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-10866840-29', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <div id='top'>
+        <div id='heading'>Terrain Exporter</div>
+        <div id='buttons' class='btn-group' role='group' aria-label=''>
+            <div id='profile' class='btn-group'>
+                <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                    <div>
+                        <img id='profile-image' height='32' />
+                        <div id='profile-name'></div>
+                        <span class='caret'></span>
+                    </div>
+                </button>
+                <ul class='dropdown-menu'>
+                    <li id='my-profile'><a href='#' target='_blank'>My Profile</a></li>
+                    <li id='my-organization'><a href='#' target='_blank'>My Organization</a></li>
+                    <li role='separator' class='divider'></li>
+                    <li id='sign-out'><a href='#'>Sign Out</a></li>
+                </ul>
+            </div>
+            <button id='sign-in' type='button' class='btn btn-default'>Sign In</button>
+            <button id='help' type='button' class='btn btn-default'>Help</button>
+            <button id='about' type='button' class='btn btn-default'>About</button>
+        </div>
+    </div>
+    <div id='bottom'>
+        <div id='left'>
+            <div class='rc-row'>
+                <div class='rc-heading'>Area of Interest</div>
+            </div>
+            <div class='rc-separator'></div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Draw</div>
+                <div class='rc-inline'>
+                    <div class='btn-group' role='group' aria-label=''>
+                        <button id='box' type='button' class='btn btn-default'>Box</button>
+                        <button id='clear' type='button' class='btn btn-default'>Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Grid</div>
+                <div class='rc-inline'>
+                    <div class='rc-inline'>
+                        <div>Width</div>
+                        <div class='input-group rc-spinner'>
+                            <input id='inputWidth' type='text' class='form-control' value='3' data-value='3'>
+                            <div class='rc-toggles'>
+                                <button class='btn btn-default' type='button' data-increment='1'><i class='fa fa-caret-up'></i></button>
+                                <button class='btn btn-default' type='button' data-increment='-1'><i class='fa fa-caret-down'></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='rc-inline'>
+                        <div>Height</div>
+                        <div class='input-group rc-spinner'>
+                            <input id='inputHeight' type='text' class='form-control' value='3' data-value='3'>
+                            <div class='rc-toggles'>
+                                <button class='btn btn-default' type='button' data-increment='1'><i class='fa fa-caret-up'></i></button>
+                                <button class='btn btn-default' type='button' data-increment='-1'><i class='fa fa-caret-down'></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Tile Size</div>
+                <div class='rc-inline'>
+                    <div id='tile-size'>0m</div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-heading'>Elevation</div>
+            </div>
+            <div class='rc-separator'></div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Source</div>
+                <div class='rc-inline'>
+                    <div id='elevation-source' class='btn-group'>
+                        <button type='button' class='btn btn-default'>Esri Terrain</button>
+                        <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            <span class='caret'></span>
+                            <span class='sr-only'>Toggle Dropdown</span>
+                        </button>
+                        <ul class='dropdown-menu'>
+                            <li data-value='https://elevation.arcgis.com/arcgis/rest/services/WorldElevation/Terrain/ImageServer' class='active'><a href='#'>Esri Terrain</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Format</div>
+                <div class='rc-inline'>
+                    <div id='elevation-format' class='btn-group' role='group' aria-label=''>
+                        <button type='button' data-value='jpg' class='btn btn-default'>jpg</button>
+                        <button type='button' data-value='png' class='btn btn-default'>png</button>
+                        <button type='button' data-value='tif' class='btn btn-default'>tif</button>
+                        <button type='button' data-value='raw' class='btn btn-default active'>raw</button>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Resolution</div>
+                <div id='elevation-resolution' class='rc-inline'>
+                    <div class='rc-block'>
+                        <div class='btn-group' role='group' aria-label=''>
+                            <button type='button' data-value='32' class='btn btn-default'>32</button>
+                            <button type='button' data-value='64' class='btn btn-default'>64</button>
+                            <button type='button' data-value='128' class='btn btn-default'>128</button>
+                        </div>
+                    </div>
+                    <div class='rc-block'>
+                        <div class='btn-group' role='group' aria-label=''>
+                            <button type='button' data-value='256' class='btn btn-default active'>256</button>
+                            <button type='button' data-value='512' class='btn btn-default'>512</button>
+                            <button type='button' data-value='1024' class='btn btn-default'>1,024</button>
+                        </div>
+                    </div>
+                    <div class='rc-block'>
+                        <div class='btn-group' role='group' aria-label=''>
+                            <button type='button' data-value='2048' class='btn btn-default'>2,048</button>
+                            <button type='button' data-value='4096' class='btn btn-default'>4,096</button>
+                            <button type='button' data-value='8192' class='btn btn-default'>8,192</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-heading'>Texture</div>
+            </div>
+            <div class='rc-separator'></div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Source</div>
+                <div class='rc-inline'>
+                    <div id='texture-source' class='btn-group'>
+                        <button type='button' class='btn btn-default'>Imagery</button>
+                        <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            <span class='caret'></span>
+                            <span class='sr-only'>Toggle Dropdown</span>
+                        </button>
+                        <ul class='dropdown-menu'>
+                            <li data-value='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer' class='active'><a href='#'>Imagery</a></li>
+                            <li data-value='https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer'><a href='#'>National Geographic</a></li>
+                            <li data-value='https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'><a href='#'>Streets</a></li>
+                            <li data-value='https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer'><a href='#'>Terrain with Labels</a></li>
+                            <li data-value='https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer'><a href='#'>Topographic</a></li>
+                            <li role='separator' class='divider'></li>
+                            <li data-value='https://server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer'><a href='#'>USA Topo Maps</a></li>
+                            <li data-value='https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer'><a href='#'>USGS National Map</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Format</div>
+                <div class='rc-inline'>
+                    <div id='texture-format' class='btn-group' role='group' aria-label=''>
+                        <button type='button' data-value='jpg' class='btn btn-default'>jpg</button>
+                        <button type='button' data-value='png' class='btn btn-default active'>png</button>
+                        <button type='button' data-value='raw' class='btn btn-default'>raw</button>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-subheading'>Resolution</div>
+                <div id='texture-resolution' class='rc-inline'>
+                    <div class='rc-block'>
+                        <div class='btn-group' role='group' aria-label=''>
+                            <button type='button' data-value='32' class='btn btn-default'>32</button>
+                            <button type='button' data-value='64' class='btn btn-default'>64</button>
+                            <button type='button' data-value='128' class='btn btn-default'>128</button>
+                        </div>
+                    </div>
+                    <div class='rc-block'>
+                        <div class='btn-group' role='group' aria-label=''>
+                            <button type='button' data-value='256' class='btn btn-default active'>256</button>
+                            <button type='button' data-value='512' class='btn btn-default'>512</button>
+                            <button type='button' data-value='1024' class='btn btn-default'>1,024</button>
+                        </div>
+                    </div>
+                    <div class='rc-block'>
+                        <div class='btn-group' role='group' aria-label=''>
+                            <button type='button' data-value='2048' class='btn btn-default'>2,048</button>
+                            <button type='button' data-value='4096' class='btn btn-default'>4,096</button>
+                            <button type='button' data-value='8192' class='btn btn-default'>8,192</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='rc-row'>
+                <div class='rc-heading'>Export</div>
+            </div>
+            <div class='rc-separator'></div>
+            <div class='rc-row rc-bottom-padding'>
+                <div class='rc-subheading'></div>
+                <div class='rc-inline'>
+                    <button id='download' type='button' class='btn btn-primary'>Download</button>
+                </div>
+            </div>
+        </div>
+        <div id='right'>
+            <div id='map'></div>
+        </div>
+    </div>
+    <div id='modalHelp' class='modal fade' tabindex='-1' role='dialog' aria-labelledby='label1'>
+        <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                    <h4 class='modal-title' id='label1'>How to use this App</h4>
+                </div>
+                <div class='modal-body'>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/ZxEc_ZKD7js" frameborder="0" allowfullscreen></iframe>
+                    <!--<div id='carousel' class='carousel slide' data-ride='carousel'>
+                        
+                        <ol class='carousel-indicators'>
+                            <li data-target='#carousel' data-slide-to='0' class='active'></li>
+                            <li data-target='#carousel' data-slide-to='1'></li>
+                            <li data-target='#carousel' data-slide-to='2'></li>
+                            <li data-target='#carousel' data-slide-to='3'></li>
+                            <li data-target='#carousel' data-slide-to='4'></li>
+                        </ol>
+
+                        
+                        <div class='carousel-inner' role='listbox'>
+                            <div class='item active'>
+                                <img src='img/slide1.png' alt='Time Adjustment'>
+                                <div class='carousel-caption'>
+                                    <h3>Time Adjustment</h3>
+                                    <p>Move the slider or pick a year from the dropdown</p>
+                                </div>
+                            </div>
+                            <div class='item'>
+                                <img src='img/slide2.png' alt='Variable Adjustment'>
+                                <div class='carousel-caption'>
+                                    <h3>Variable Adjustment</h3>
+                                    <p>Pick one of six modelled variables</p>
+                                </div>
+                            </div>
+                            <div class='item'>
+                                <img src='img/slide3.png' alt='Model Adjustment'>
+                                <div class='carousel-caption'>
+                                    <h3>Model Adjustment</h3>
+                                    <p>Pick one of three IPCC climate model</p>
+                                </div>
+                            </div>
+                            <div class='item'>
+                                <img src='img/slide4.png' alt='Documented Events'>
+                                <div class='carousel-caption'>
+                                    <h3>Documented Events</h3>
+                                    <p>Click a blue dot for years between 1950 and 2005</p>
+                                </div>
+                            </div>
+                            <div class='item'>
+                                <img src='img/slide5.png' alt='More Information'>
+                                <div class='carousel-caption'>
+                                    <h3>More Information</h3>
+                                    <p>Click <strong>help</strong> or <strong>about</strong> for more information about the app.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <a class='left carousel-control' href='#carousel' role='button' data-slide='prev'>
+                            <i class='fa fa-chevron-left' aria-hidden='true'></i>
+                            <span class='sr-only'>Previous</span>
+                        </a>
+                        <a class='right carousel-control' href='#carousel' role='button' data-slide='next'>
+                            <i class='fa fa-chevron-right' aria-hidden='true'></i>
+                            <span class='sr-only'>Next</span>
+                        </a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='modalAbout' class='modal fade' tabindex='-1' role='dialog' aria-labelledby='label2'>
+        <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                    <h4 class='modal-title' id='label2'>About this App</h4>
+                </div>
+                <div class='modal-body'>
+                    <p>This application was designed and developed by <a href='http://www.esri.com'>Esri</a>'s <a href='http://blogs.esri.com/esri/apl/'>Applications Prototype Lab</a> in Redlands, California. The application was built using the following technologies:</p>
+                    <ul style='margin-left: -20px;'>
+                        <li><a href='http://developers.arcgis.com/javascript/'>ArcGIS API for JavaScript</a> by <a href='http://www.esri.com'>Esri</a></li>
+                        <li><a href='http://getbootstrap.com/'>Bootstrap</a> by <a href='https://twitter.com/'>Twitter Inc.</a></li>
+                        <li><a href='http://d3js.org/'>D3.js</a> by <a href='http://bost.ocks.org/mike/'>Mike Bostock</a></li>
+                        <li><a href='http://jquery.com/'>jQuery</a> by the jQuery Foundation Inc.</li>
+                    </ul>
+                    <p>
+                        Data in this presentation is courtesy of <a href='http://www.soc.hawaii.edu/mora/Team.html'>Dr. Camilo Mora</a> from the <a href='https://www.hawaii.edu/'>University of Hawai'i's</a> <a href='http://www.geography.hawaii.edu/index.html'>Department of Geography</a>. The following is an extract from <strong>Global risk of deadly heat anomalies (2015)</strong> by Mora et al.
+                    </p>
+                    <p>
+                        <strong><i>Survey of published cases of heat-related mortality.</i></strong> We searched for peer-reviewed publications on heat-related mortality in Google Scholar, PubMed, and the Web-of-Science, limiting the search to papers published between 1980 and 2014 and using the following keywords: (human OR people) AND (mortality OR death OR lethal) AND (heat OR temperature). We searched for papers primarily in English but also included papers in Spanish, French, Japanese, and Chinese when found. We reviewed the titles and abstracts of the first 30,000 citations in Google Scholar and all citations from other databases and selected any publications on heat-related human mortality (we also searched for additional sources in the references). These efforts resulted in 911 papers from which we collected information on the place and dates of lethal heat events, as well as the percent excess mortality when reported.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
