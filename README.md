@@ -5,8 +5,8 @@ Terrain Exporter is a proof-of-concept developed to assist 3d designers with cre
 The application was designed and developed by [Esri](https://www.esri.com/)'s [Applications Prototype Lab](https://maps.esri.com) in Redlands, California. The application was built using the following technologies:
 
 - [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) by [Esri](https://www.esri.com)
-- [Bootstrap](http://getbootstrap.com/) by [Twitter Inc.](https://twitter.com/)
-- [jQuery](http://jquery.com/) by the jQuery Foundation Inc.
+- [Bootstrap](https://getbootstrap.com/) by [Twitter Inc.](https://twitter.com/)
+- [jQuery](https://jquery.com/) by the jQuery Foundation Inc.
 
 This application requires an ArcGIS Online organization subscription or an ArcGIS Developer account but does not consume credits. If you don't have an account, you can sign up for a [free trial of ArcGIS](http://goto.arcgisonline.com/features/trial) or a [free ArcGIS Developer Account](http://goto.arcgisonline.com/developers/signup).
 
