@@ -61,12 +61,13 @@ html, body {
     color: black;
     overflow-x: hidden;
     overflow-y: auto;
+    margin-left: -310px;
 }
 
 #right {
     position: absolute;
     top: 0;
-    left: 310px;
+    left: 0;
     right: 0;
     bottom: 0;
 }
@@ -137,11 +138,16 @@ html, body {
 
 #elevation-resolution .btn,
 #texture-resolution .btn {
-    width:60px;
+    width: 60px;
 }
 
-#tile-size {
-    font-style: italic;
+#modalHelp, #modalAbout {
+    z-index: 1070;
+}
+
+#link-walkthrough-video {
+    display: block;
+    margin-top: 10px;
 }
 
 .btn, .form-control, .dropdown-menu {
@@ -152,30 +158,15 @@ html, body {
     background-color: #fff;
 }
 
-/*.carousel-indicators li {
-    border-color: #777;
-}
-
-.carousel-indicators .active {
-    background-color: #777;
-}
-
-.carousel-caption {
-    background-color: rgba(255, 255, 255, 0.3);
-    font-family: 'Avenir LT W01 85 Heavy';
-    text-shadow: none;
-    color: #777;
-}
-
 .carousel-control > i {
     position: absolute;
     top: 50%;
     right: 50%;
     margin-top: -10px;
     margin-right: -10px;
-}*/
+}
 
-.popover-content{
+.popover-content {
     color: #000000;
 }
 
@@ -205,7 +196,6 @@ html, body {
     font-size: 14px;
     width: 85px;
     vertical-align: top;
-    margin-top: 5px;
 }
 
 .rc-row {

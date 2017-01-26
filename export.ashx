@@ -19,7 +19,6 @@ public class export : IHttpHandler {
     // CONSTANTS
     //
     private const string DOWNLOAD_FOLDER = "download";
-    private const double FILE_TIMEOUT = 60d; // Minutes
     //
     // METHODS
     //
@@ -42,7 +41,7 @@ public class export : IHttpHandler {
 
         // Remove old zip files (if any).
         var files = di.EnumerateFiles("*.zip").Where((f) => {
-            return DateTime.Now.ToUniversalTime().Subtract(f.CreationTimeUtc).TotalMinutes > export.FILE_TIMEOUT;
+            return DateTime.Now.ToUniversalTime().Subtract(f.CreationTimeUtc).Ticks > TimeSpan.TicksPerDay; 
         });
         foreach (var file in files) {
             if (file.Exists) {

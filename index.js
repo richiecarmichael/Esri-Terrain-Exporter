@@ -71,12 +71,6 @@ function (
         // Map view
         var _view = new MapView({
             container: 'map',
-            //extent: {
-            //    xmin: -130,
-            //    ymin: 23,
-            //    xmax: -70,
-            //    ymax: 50
-            //},
             extent: {
                 xmin: -111.742,
                 ymin: 36.161,
@@ -124,6 +118,46 @@ function (
             })
         });
 
+        function connected() {
+            $('#sign-in').popover('hide');
+            $('#sign-in').hide();
+            $('#profile').show();
+            $('#left').delay(100).animate({
+                'margin-left': '0'
+            }, {
+                duration: 400,
+                easing: 'swing',
+                queue: false,
+                complete: function () {
+                    $('#right').css({
+                        'left': $('#left').width() + 'px'
+                    });
+                }
+            });
+        }
+        function disconnected() {
+            $('#left').css({
+                'margin-left': -1 * $('#left').width() + 'px'
+            });
+            $('#right').css({
+                'left': '0'
+            });
+            _credentials = null;
+            $('#profile').hide();
+            $('#sign-in').show();
+            $('#sign-in').popover('show');
+        }
+
+        // Define Login Popover.
+        $('#sign-in').popover({
+            container: 'body',
+            content: 'Please sign in with an ArcGIS Online organization or an ArcGIS Developer account.<br><i>If you don&apos;t have an account, you can sign up for a <a href="http://goto.arcgisonline.com/features/trial" target="_blank">free trial of ArcGIS</a> or a <a href="http://goto.arcgisonline.com/developers/signup" target="_blank">free ArcGIS Developer account</a>.</i>',
+            html: true,
+            placement: 'bottom',
+            title: 'Sign into ArcGIS Online',
+            trigger: 'manual'
+        });
+
         // Add Search and Home widgets.
         _view.ui.add(new Search({
             view: _view
@@ -145,36 +179,51 @@ function (
         });
         IdentityManager.registerOAuthInfos([info]);
         IdentityManager.checkSignInStatus(info.portalUrl + '/sharing').then(function (resolved) {
-            _credentials = resolved;
-            $('#sign-in').hide();
-            $('#profile').show();
             var portal = new Portal({
                 authMode: 'immediate'
             });
             portal.load().then(function () {
+                // Check for non-organizational account
+                if (!portal.isOrganization) {
+                    IdentityManager.destroyCredentials();
+                    $('#modalAccount').modal('show');
+                    return;
+                }
+                // Store credentials
+                _credentials = resolved;
+                // Update UI
                 $('#profile-name').html(portal.user.fullName);
                 $('#profile-image').prop('src', portal.user.thumbnailUrl);
-                $('#my-profile > a').prop('href', portal.user.userContentUrl);
-                $('#my-organization > a').prop('href', portal.user.portal.portalHostnameString);
+                $('#my-profile > a').prop('href', $.format(
+                    'https://{0}.{1}/home/user.html', [
+                        portal.urlKey,
+                        portal.customBaseUrl
+                    ])
+                );
+                $('#my-content > a').prop('href', $.format(
+                    'https://{0}.{1}/home/content.html', [
+                        portal.urlKey,
+                        portal.customBaseUrl
+                    ])
+                );
+                connected();
             });
-        }).otherwise(function (error) {
-            _credentials = null;
-            $('#sign-in').show();
-            $('#profile').hide();
+        }).otherwise(function (error) {          
+            disconnected();
         });
+
+        // Show about dialog on startup
+        //$('#modalAbout').modal('show');
 
         // User clicks the Sign In button
         $('#sign-in').click(function () {
-            $('#sign-in').popover('hide');
             IdentityManager.getCredential(info.portalUrl + '/sharing');
         });
 
         // User clicks the Sign Out button
         $('#sign-out').click(function () {
             IdentityManager.destroyCredentials();
-            _credentials = null;
-            $('#sign-in').show();
-            $('#profile').hide();
+            disconnected();
         });
 
         // Elevation/Texture UI.
@@ -206,14 +255,6 @@ function (
             
             // Update tiles
             addTerrainTiles();
-        });
-
-        // Show help and about dialogs.
-        $('#help').click(function () {
-            $('#modalHelp').modal('show');
-        });
-        $('#about').click(function () {
-            $('#modalAbout').modal('show');
         });
         
         // Draw Area of Interest Rectangle.
@@ -335,14 +376,7 @@ function (
             
             // Check AGOL connection.
             if (_credentials === null) {
-                $('#sign-in').popover({
-                    container: 'body',
-                    content: 'Please sign into ArcGIS Online to allow exporting of terrain information.',
-                    html: true,
-                    placement: 'bottom',
-                    title:'ArcGIS Online',
-                    trigger: 'manual'
-                }).popover('show');
+                $('#modalAccount').modal('show');
                 return;
             }
 
@@ -386,8 +420,12 @@ function (
                 texture: texture
             };
 
+            // Show processing dialog.
+            $('#modalProcessing').modal('show');
+
             $.post('export.ashx', JSON.stringify(data))
             .done(function (e) {
+                $('#modalProcessing').modal('hide');
                 $('body').append(
                     $(document.createElement('iframe')).attr({
                         src: e.url
@@ -395,12 +433,13 @@ function (
                         display: 'none'
                     })
                 );
-             })
-            .fail(function (e) {
-                // Error.
             })
-            .always(function() {
-                // Clean up.
+            .fail(function (e) {
+                $('#modalProcessing').modal('hide');
+                $('#modalError').modal('show');
+                $('#modalError .modal-body p').html(
+                    e.responseText
+                );
             });
         });
 
